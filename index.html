@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPG - Ultimate Performance Gaming | Магазин компьютерной техники</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        upg: {
+                            bg: '#0b0f19',
+                            card: '#151c2c',
+                            border: '#2a3449',
+                            accent: '#6366f1',
+                            cyan: '#06b6d4',
+                            neon: '#a855f7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.4);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.4);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4, #6366f1, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #151c2c;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2a3449;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
+        }
+    </style>
+</head>
+<body class="custom-scrollbar min-h-screen flex flex-col justify-between">
+
+    <!-- GitHub 404 Modal / Guide Banner -->
+    <div id="gh-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-upg-card border border-upg-cyan/40 rounded-2xl p-6 max-w-xl w-full relative shadow-2xl">
+            <button onclick="toggleGhModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4 text-upg-cyan">
+                <i class="fa-brands fa-github text-3xl"></i>
+                <h3 class="text-xl font-bold">Как избежать ошибки 404 на GitHub Pages?</h3>
+            </div>
+            <div class="space-y-3 text-gray-300 text-sm leading-relaxed">
+                <p>Чтобы ваш веб-сайт UPG открывался корректно и без ошибки 404 при публикации на GitHub Pages, соблюдайте важные правила:</p>
+                <ul class="list-disc pl-5 space-y-2 text-gray-200">
+                    <li><strong class="text-upg-cyan">Имя файла:</strong> Основной файл обязательно должен называться <code class="bg-black/50 px-2 py-0.5 rounded text-yellow-400">index.html</code> и находиться в корневой папке репозитория (root folder).</li>
+                    <li><strong class="text-upg-cyan">Настройки Pages:</strong> В настройках репозитория (Settings &rarr; Pages) выберите источник <span class="bg-black/50 px-2 py-0.5 rounded text-white">Deploy from a branch</span>, укажите ветку <code class="bg-black/50 px-2 py-0.5 rounded text-yellow-400">main</code> (или <code class="bg-black/50 px-2 py-0.5 rounded text-yellow-400">master</code>) и папку <code class="bg-black/50 px-2 py-0.5 rounded text-yellow-400">/(root)</code>.</li>
+                    <li><strong class="text-upg-cyan">Привязка ссылок:</strong> Все пути к картинкам и скриптам должны быть относительными.</li>
+                    <li><strong class="text-upg-cyan">Публичность:</strong> Репозиторий должен быть открытым (Public) для бесплатного GitHub Pages.</li>
+                </ul>
+            </div>
+            <button onclick="toggleGhModal()" class="mt-6 w-full bg-gradient-to-r from-upg-cyan to-upg-accent hover:opacity-90 py-2.5 rounded-xl text-white font-medium transition">
+                Понятно, продолжить просмотр
+            </button>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-upg-bg/90 backdrop-blur-md border-b border-upg-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-upg-cyan to-upg-neon flex items-center justify-center text-white font-extrabold text-xl shadow-lg group-hover:scale-105 transition-transform">
+                    U
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-wider text-white">UPG<span class="text-upg-cyan">.</span></span>
+                    <span class="text-[9px] uppercase tracking-widest text-gray-400 font-semibold">Ultimate Gaming Store</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-sm text-gray-300">
+                <a href="#catalog" class="hover:text-upg-cyan transition-colors">Каталог</a>
+                <a href="#builder" class="hover:text-upg-cyan transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-microchip text-upg-accent"></i> Конфигуратор
+                </a>
+                <a href="#about" class="hover:text-upg-cyan transition-colors">О нас</a>
+                <a href="#contacts" class="hover:text-upg-cyan transition-colors">Контакты</a>
+                <button onclick="toggleGhModal()" class="text-xs text-yellow-400/80 hover:text-yellow-300 flex items-center gap-1 border border-yellow-500/30 bg-yellow-500/10 px-2.5 py-1 rounded-full transition">
+                    <i class="fa-brands fa-github"></i> 404 Инфо
+                </button>
+            </nav>
+
+            <!-- Actions (Cart & Mobile menu trigger) -->
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleCart()" class="relative p-2.5 bg-upg-card hover:bg-upg-border border border-upg-border rounded-xl text-gray-200 transition">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute -top-1.5 -right-1.5 bg-upg-cyan text-black font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center hidden">
+                        0
+                    </span>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-300 hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-upg-card border-b border-upg-border px-4 py-4 space-y-3">
+            <a href="#catalog" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-upg-cyan">Каталог</a>
+            <a href="#builder" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-upg-cyan">Конфигуратор ПК</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-upg-cyan">О нас</a>
+            <a href="#contacts" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-upg-cyan">Контакты</a>
+            <button onclick="toggleGhModal(); toggleMobileMenu();" class="text-xs text-yellow-400 flex items-center gap-1 pt-2">
+                <i class="fa-brands fa-github"></i> Инструкция GitHub Pages (404)
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        
+        <!-- Hero Section -->
+        <section class="relative py-20 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-upg-accent/10 via-transparent to-upg-cyan/10 pointer-events-none"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-upg-card border border-upg-accent/30 text-xs font-semibold text-upg-cyan">
+                            <span class="w-2 h-2 rounded-full bg-upg-cyan animate-pulse"></span>
+                            Новое поступление NVIDIA RTX 4090 & Intel i9 14-го поколения
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                            Максимальная мощь для <span class="gradient-text">ваших побед</span>
+                        </h1>
+                        <p class="text-gray-400 text-base sm:text-lg max-w-xl mx-auto lg:mx-0">
+                            Магазин топовой компьютерной техники UPG. Сборка эксклюзивных игровых станций, официальная гарантия и доставка по всему Узбекистану.
+                        </p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                            <a href="#catalog" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-upg-cyan to-upg-accent font-bold text-white shadow-lg glow-effect hover:opacity-90 transition text-center">
+                                Перейти в каталог <i class="fa-solid fa-arrow-right ml-2"></i>
+                            </a>
+                            <a href="#builder" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-upg-card border border-upg-border font-bold text-gray-200 hover:border-upg-cyan transition text-center">
+                                Собрать ПК <i class="fa-solid fa-wrench ml-2 text-upg-cyan"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="relative flex justify-center">
+                        <div class="relative w-full max-w-md lg:max-w-none">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-upg-cyan to-upg-neon rounded-2xl blur opacity-30 animate-pulse"></div>
+                            <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=800&q=80" 
+                                 alt="High-end Gaming PC" 
+                                 class="relative rounded-2xl shadow-2xl border border-upg-border object-cover w-full h-[380px] sm:h-[450px]"
+                                 onerror="this.src='https://placehold.co/800x600/151c2c/ffffff?text=UPG+Gaming+PC'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Banner -->
+        <section class="border-y border-upg-border bg-upg-card/40 py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                    <div class="text-3xl font-extrabold text-upg-cyan">5000+</div>
+                    <div class="text-xs text-gray-400 mt-1 uppercase font-semibold">Собрано компьютеров</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-extrabold text-upg-neon">3 года</div>
+                    <div class="text-xs text-gray-400 mt-1 uppercase font-semibold">Официальная гарантия</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-extrabold text-upg-cyan">24 часа</div>
+                    <div class="text-xs text-gray-400 mt-1 uppercase font-semibold">Быстрая доставка</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-extrabold text-upg-accent">100%</div>
+                    <div class="text-xs text-gray-400 mt-1 uppercase font-semibold">Оригинальные комплектующие</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catalog Section -->
+        <section id="catalog" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-white">Каталог товаров</h2>
+                    <p class="text-gray-400 text-sm mt-1">Выберите интересующую вас категорию техники</p>
+                </div>
+
+                <!-- Categories Filter -->
+                <div class="flex flex-wrap gap-2" id="category-filters">
+                    <button onclick="filterCategory('all')" class="cat-btn active px-4 py-2 rounded-xl text-sm font-semibold border transition border-upg-cyan bg-upg-cyan/10 text-upg-cyan" data-cat="all">Все</button>
+                    <button onclick="filterCategory('pcs')" class="cat-btn px-4 py-2 rounded-xl text-sm font-semibold border border-upg-border bg-upg-card text-gray-300 hover:border-upg-cyan transition" data-cat="pcs">Готовые ПК</button>
+                    <button onclick="filterCategory('laptops')" class="cat-btn px-4 py-2 rounded-xl text-sm font-semibold border border-upg-border bg-upg-card text-gray-300 hover:border-upg-cyan transition" data-cat="laptops">Ноутбуки</button>
+                    <button onclick="filterCategory('gpu')" class="cat-btn px-4 py-2 rounded-xl text-sm font-semibold border border-upg-border bg-upg-card text-gray-300 hover:border-upg-cyan transition" data-cat="gpu">Видеокарты</button>
+                    <button onclick="filterCategory('peripherals')" class="cat-btn px-4 py-2 rounded-xl text-sm font-semibold border border-upg-border bg-upg-card text-gray-300 hover:border-upg-cyan transition" data-cat="peripherals">Периферия</button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Dynamic Content via JS -->
+            </div>
+        </section>
+
+        <!-- Custom PC Builder / Configurator -->
+        <section id="builder" class="py-16 bg-upg-card/30 border-t border-upg-border relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-upg-cyan text-xs font-bold uppercase tracking-wider">Интерактивный конфигуратор</span>
+                    <h2 class="text-3xl font-bold text-white mt-1">Соберите ПК вашей мечты</h2>
+                    <p class="text-gray-400 text-sm mt-2">Выбирайте компоненты, отслеживайте стоимость в реальном времени и отправляйте конфигурацию прямо в корзину.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8 items-start">
+                    <!-- Builder Options -->
+                    <div class="lg:col-span-2 space-y-6 bg-upg-card p-6 rounded-2xl border border-upg-border">
+                        
+                        <!-- CPU Select -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">
+                                <i class="fa-solid fa-microchip text-upg-cyan mr-2"></i> Процессор (CPU)
+                            </label>
+                            <select id="build-cpu" onchange="calculateBuildTotal()" class="w-full bg-upg-bg border border-upg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-upg-cyan">
+                                <option value="350" data-name="Intel Core i5-13600K">Intel Core i5-13600K ($350)</option>
+                                <option value="580" data-name="Intel Core i9-14900K" selected>Intel Core i9-14900K ($580)</option>
+                                <option value="420" data-name="AMD Ryzen 7 7800X3D">AMD Ryzen 7 7800X3D ($420)</option>
+                                <option value="650" data-name="AMD Ryzen 9 7950X3D">AMD Ryzen 9 7950X3D ($650)</option>
+                            </select>
+                        </div>
+
+                        <!-- GPU Select -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">
+                                <i class="fa-solid fa-layer-group text-upg-neon mr-2"></i> Видеокарта (GPU)
+                            </label>
+                            <select id="build-gpu" onchange="calculateBuildTotal()" class="w-full bg-upg-bg border border-upg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-upg-cyan">
+                                <option value="600" data-name="NVIDIA GeForce RTX 4070 12GB">NVIDIA GeForce RTX 4070 12GB ($600)</option>
+                                <option value="980" data-name="NVIDIA GeForce RTX 4080 Super 16GB">NVIDIA GeForce RTX 4080 Super 16GB ($980)</option>
+                                <option value="1950" data-name="NVIDIA GeForce RTX 4090 24GB" selected>NVIDIA GeForce RTX 4090 24GB ($1950)</option>
+                                <option value="950" data-name="AMD Radeon RX 7900 XTX 24GB">AMD Radeon RX 7900 XTX 24GB ($950)</option>
+                            </select>
+                        </div>
+
+                        <!-- RAM Select -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">
+                                <i class="fa-solid fa-memory text-upg-accent mr-2"></i> Оперативная память (RAM)
+                            </label>
+                            <select id="build-ram" onchange="calculateBuildTotal()" class="w-full bg-upg-bg border border-upg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-upg-cyan">
+                                <option value="110" data-name="16GB DDR5 6000MHz Kingston Fury">16GB DDR5 6000MHz ($110)</option>
+                                <option value="210" data-name="32GB DDR5 6400MHz G.Skill Trident Z" selected>32GB DDR5 6400MHz ($210)</option>
+                                <option value="390" data-name="64GB DDR5 6400MHz Corsair Vengeance">64GB DDR5 6400MHz ($390)</option>
+                            </select>
+                        </div>
+
+                        <!-- SSD Select -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">
+                                <i class="fa-solid fa-database text-emerald-400 mr-2"></i> Накопитель (SSD NVMe)
+                            </label>
+                            <select id="build-ssd" onchange="calculateBuildTotal()" class="w-full bg-upg-bg border border-upg-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-upg-cyan">
+                                <option value="90" data-name="1TB Samsung 980 Pro M.2">1TB Samsung 980 Pro ($90)</option>
+                                <option value="170" data-name="2TB Samsung 990 Pro M.2" selected>2TB Samsung 990 Pro ($170)</option>
+                                <option value="340" data-name="4TB Kingston KC3000 M.2">4TB Kingston KC3000 ($340)</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- Live Summary Card -->
+                    <div class="bg-upg-card p-6 rounded-2xl border border-upg-border sticky top-28 flex flex-col justify-between h-full">
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-4 flex items-center justify-between">
+                                Итог сборки <i class="fa-solid fa-sliders text-upg-cyan"></i>
+                            </h3>
+                            
+                            <div class="space-y-3 border-b border-upg-border pb-4 text-sm text-gray-300">
+                                <div class="flex justify-between"><span class="text-gray-400">ЦП:</span> <span id="summary-cpu" class="font-medium text-right text-white"></span></div>
+                                <div class="flex justify-between"><span class="text-gray-400">ГПУ:</span> <span id="summary-gpu" class="font-medium text-right text-white"></span></div>
+                                <div class="flex justify-between"><span class="text-gray-400">ОЗУ:</span> <span id="summary-ram" class="font-medium text-right text-white"></span></div>
+                                <div class="flex justify-between"><span class="text-gray-400">SSD:</span> <span id="summary-ssd" class="font-medium text-right text-white"></span></div>
+                                <div class="flex justify-between"><span class="text-gray-400">Корпус & БП:</span> <span class="font-medium text-white">$250 (По умолчанию)</span></div>
+                            </div>
+
+                            <div class="pt-4">
+                                <div class="text-gray-400 text-xs uppercase tracking-wider">Общая стоимость</div>
+                                <div class="flex items-baseline gap-2 mt-1">
+                                    <span id="build-total-usd" class="text-3xl font-extrabold text-upg-cyan">$0</span>
+                                    <span id="build-total-uzs" class="text-xs text-gray-400">0 UZS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="addCustomBuildToCart()" class="mt-6 w-full py-3.5 bg-gradient-to-r from-upg-cyan to-upg-accent text-white font-bold rounded-xl shadow-lg hover:opacity-90 transition">
+                            Добавить сборку в корзину
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-4">
+                    <span class="text-upg-neon text-xs font-bold uppercase tracking-widest">О компании UPG</span>
+                    <h2 class="text-3xl font-bold text-white">Инновации, качество и страсть к железу</h2>
+                    <p class="text-gray-400 leading-relaxed text-sm">
+                        UPG (Ultimate Performance Gaming) — лидер на рынке премиального игрового оборудования и профессиональных рабочих станций. Мы подбираем только качественные комплектующие от мировых бредов (ASUS, MSI, Gigabyte, Intel, AMD, NVIDIA).
+                    </p>
+                    <p class="text-gray-400 leading-relaxed text-sm">
+                        Каждый собранный у нас ПК проходит 24-часовой стресс-тест перед отправкой клиенту. Наша цель — предложить бескомпромиссную производительность для геймеров, 3D-дизайнеров и киберспортсменов.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-upg-card p-6 rounded-2xl border border-upg-border text-center">
+                        <i class="fa-solid fa-headset text-3xl text-upg-cyan mb-3"></i>
+                        <h4 class="font-bold text-white text-base">Поддержка 24/7</h4>
+                        <p class="text-gray-400 text-xs mt-1">Консультации экспeртов</p>
+                    </div>
+                    <div class="bg-upg-card p-6 rounded-2xl border border-upg-border text-center">
+                        <i class="fa-solid fa-truck-fast text-3xl text-upg-neon mb-3"></i>
+                        <h4 class="font-bold text-white text-base">Доставка</h4>
+                        <p class="text-gray-400 text-xs mt-1">По всему Узбекистану</p>
+                    </div>
+                    <div class="bg-upg-card p-6 rounded-2xl border border-upg-border text-center">
+                        <i class="fa-solid fa-shield-halved text-3xl text-upg-accent mb-3"></i>
+                        <h4 class="font-bold text-white text-base">Гарантия</h4>
+                        <p class="text-gray-400 text-xs mt-1">До 36 месяцев</p>
+                    </div>
+                    <div class="bg-upg-card p-6 rounded-2xl border border-upg-border text-center">
+                        <i class="fa-solid fa-screwdriver-wrench text-3xl text-emerald-400 mb-3"></i>
+                        <h4 class="font-bold text-white text-base">Сервис</h4>
+                        <p class="text-gray-400 text-xs mt-1">Модернизация и чистка</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacts Section -->
+        <section id="contacts" class="py-16 bg-upg-card/40 border-t border-upg-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-3 gap-8">
+                    
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-white">Контакты UPG</h3>
+                        <p class="text-gray-400 text-sm">Ждем вас в нашем шоуруме! Вы можете протестировать любой компьютер перед покупкой.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-upg-card border border-upg-border flex items-center justify-center text-upg-cyan shrink-0">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-gray-400 uppercase font-semibold">Адрес шоурума</div>
+                                    <div class="text-sm font-medium text-white">г. Ташкент, ул. Шайхантахур, д. 45A</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-upg-card border border-upg-border flex items-center justify-center text-upg-neon shrink-0">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-gray-400 uppercase font-semibold">Телефон</div>
+                                    <div class="text-sm font-medium text-white">+998 (71) 200-99-88</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-upg-card border border-upg-border flex items-center justify-center text-upg-accent shrink-0">
+                                    <i class="fa-paper-plane fa-solid"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-gray-400 uppercase font-semibold">Telegram Канал</div>
+                                    <a href="https://t.me" target="_blank" class="text-sm font-medium text-upg-cyan hover:underline">@upg_gaming_store</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-upg-card border border-upg-border flex items-center justify-center text-emerald-400 shrink-0">
+                                    <i class="fa-solid fa-clock"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-gray-400 uppercase font-semibold">Режим работы</div>
+                                    <div class="text-sm font-medium text-white">Пн - Вс: 10:00 - 20:00 (без выходных)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Message Form -->
+                    <div class="lg:col-span-2 bg-upg-card p-6 sm:p-8 rounded-2xl border border-upg-border">
+                        <h4 class="text-xl font-bold text-white mb-2">Остались вопросы?</h4>
+                        <p class="text-gray-400 text-xs mb-6">Оставьте заявку, и наш эксперт свяжется с вами в течение 10 минут.</p>
+                        
+                        <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-300 mb-1">Ваше имя</label>
+                                    <input type="text" required placeholder="Александр" class="w-full bg-upg-bg border border-upg-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-upg-cyan">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-gray-300 mb-1">Номер телефона</label>
+                                    <input type="tel" required placeholder="+998 (90) 123-45-67" class="w-full bg-upg-bg border border-upg-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-upg-cyan">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-300 mb-1">Сообщение или интересующий ПК</label>
+                                <textarea rows="3" placeholder="Здравствуйте, хочу проконсультироваться по поводу сборки..." class="w-full bg-upg-bg border border-upg-border rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-upg-cyan"></textarea>
+                            </div>
+                            <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-upg-cyan to-upg-accent text-white font-bold rounded-xl hover:opacity-90 transition">
+                                Отправить запрос
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Cart Drawer / Modal -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="toggleCart()"></div>
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-upg-card border-l border-upg-border shadow-2xl flex flex-col justify-between">
+                
+                <!-- Cart Header -->
+                <div class="p-6 border-b border-upg-border flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping text-upg-cyan text-xl"></i>
+                        <h2 class="text-xl font-bold text-white">Корзина</h2>
+                    </div>
+                    <button onclick="toggleCart()" class="text-gray-400 hover:text-white p-2">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items List -->
+                <div id="cart-items-container" class="p-6 flex-grow overflow-y-auto space-y-4 custom-scrollbar">
+                    <!-- Dynamic Cart Items -->
+                </div>
+
+                <!-- Cart Footer / Checkout -->
+                <div class="p-6 border-t border-upg-border bg-upg-bg/50">
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between text-gray-400 text-sm">
+                            <span>Итого (USD):</span>
+                            <span id="cart-total-usd" class="font-bold text-white">$0</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400 text-sm">
+                            <span>Итого (UZS):</span>
+                            <span id="cart-total-uzs" class="font-bold text-upg-cyan">0 UZS</span>
+                        </div>
+                    </div>
+                    <button onclick="checkout()" class="w-full py-4 bg-gradient-to-r from-upg-cyan to-upg-accent text-white font-bold rounded-xl shadow-lg hover:opacity-90 transition">
+                        Оформить заказ
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-upg-card border border-upg-cyan text-white px-5 py-3 rounded-xl shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-upg-cyan text-xl"></i>
+        <span id="toast-message" class="text-sm font-medium">Товар добавлен в корзину!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-upg-bg border-t border-upg-border py-8 text-center sm:text-left">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-md bg-upg-cyan flex items-center justify-center text-black font-extrabold text-xs">U</div>
+                <span class="text-sm text-gray-400">© 2026 UPG (Ultimate Performance Gaming). Все права защищены.</span>
+            </div>
+            <div class="flex space-x-6 text-gray-400">
+                <a href="#" class="hover:text-upg-cyan transition"><i class="fa-brands fa-telegram text-lg"></i></a>
+                <a href="#" class="hover:text-upg-cyan transition"><i class="fa-brands fa-instagram text-lg"></i></a>
+                <a href="#" class="hover:text-upg-cyan transition"><i class="fa-brands fa-youtube text-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Application JavaScript Logic -->
+    <script>
+        // Exchange Rate constant USD -> UZS
+        const USD_TO_UZS = 12600;
+
+        // Products Database
+        const products = [
+            {
+                id: 1,
+                name: "Игровой ПК UPG Titan Beast",
+                category: "pcs",
+                price: 2850,
+                specs: "Intel i9-14900K | RTX 4090 24GB | 32GB DDR5 | 2TB SSD",
+                image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 2,
+                name: "Игровой ПК UPG Cyber Start",
+                category: "pcs",
+                price: 1150,
+                specs: "Intel i5-13400F | RTX 4060 8GB | 16GB DDR4 | 1TB SSD",
+                image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 3,
+                name: "Ноутбук ASUS ROG Strix SCAR 18",
+                category: "laptops",
+                price: 3400,
+                specs: "Intel i9-13980HX | RTX 4090 16GB | 32GB RAM | 240Hz Mini-LED",
+                image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 4,
+                name: "Ноутбук Lenovo Legion Pro 5",
+                category: "laptops",
+                price: 1650,
+                specs: "AMD Ryzen 7 7745HX | RTX 4070 8GB | 16GB RAM | 165Hz WQXGA",
+                image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 5,
+                name: "Видеокарта ROG Strix RTX 4090 OC",
+                category: "gpu",
+                price: 2100,
+                specs: "24GB GDDR6X | 384-bit | PCIe 4.0 | ARGB Aura",
+                image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 6,
+                name: "Видеокарта MSI RTX 4070 Ti Super",
+                category: "gpu",
+                price: 950,
+                specs: "16GB GDDR6X | 256-bit | Tri Frozr 3 Cooling",
+                image: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 7,
+                name: "Клавиатура Razer Huntsman V3 Pro",
+                category: "peripherals",
+                price: 250,
+                specs: "Аналоговые оптические переключатели Gen-2 | Rapid Trigger",
+                image: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 8,
+                name: "Монитор Odyssey G9 OLED 49\"",
+                category: "peripherals",
+                price: 1400,
+                specs: "DQHD | 240Hz | 0.03ms | Curved 1800R | Quantum Dot",
+                image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
+        // Cart State
+        let cart = [];
+
+        // Format Currency Helper
+        function formatUZS(usd) {
+            return (usd * USD_TO_UZS).toLocaleString('ru-RU') + ' UZS';
+        }
+
+        // Render Catalog Products
+        function renderProducts(category = 'all') {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            const filtered = category === 'all' 
+                ? products 
+                : products.filter(p => p.category === category);
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-upg-card border border-upg-border rounded-2xl p-4 flex flex-col justify-between hover:border-upg-cyan transition-all duration-300 group";
+                card.innerHTML = `
+                    <div>
+                        <div class="relative overflow-hidden rounded-xl mb-4 bg-upg-bg h-48 flex items-center justify-center">
+                            <img src="${p.image}" alt="${p.name}" class="object-cover w-full h-full group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x400/151c2c/ffffff?text=UPG+Tech'">
+                        </div>
+                        <h3 class="font-bold text-lg text-white group-hover:text-upg-cyan transition">${p.name}</h3>
+                        <p class="text-xs text-gray-400 mt-2 line-clamp-2">${p.specs}</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-upg-border flex items-center justify-between">
+                        <div>
+                            <div class="text-xl font-extrabold text-white">$${p.price}</div>
+                            <div class="text-[10px] text-gray-400">${formatUZS(p.price)}</div>
+                        </div>
+                        <button onclick="addToCart(${p.id})" class="p-3 bg-upg-cyan/10 border border-upg-cyan/40 hover:bg-upg-cyan hover:text-black text-upg-cyan font-semibold rounded-xl transition flex items-center justify-center">
+                            <i class="fa-solid fa-cart-plus text-base"></i>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Category Click
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.className = "cat-btn active px-4 py-2 rounded-xl text-sm font-semibold border transition border-upg-cyan bg-upg-cyan/10 text-upg-cyan";
+                } else {
+                    btn.className = "cat-btn px-4 py-2 rounded-xl text-sm font-semibold border border-upg-border bg-upg-card text-gray-300 hover:border-upg-cyan transition";
+                }
+            });
+            renderProducts(cat);
+        }
+
+        // Add Product to Cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+            showToast(`"${product.name}" добавлен в корзину!`);
+        }
+
+        // Add Custom Build from Configurator to Cart
+        function addCustomBuildToCart() {
+            const cpuEl = document.getElementById('build-cpu');
+            const gpuEl = document.getElementById('build-gpu');
+            const ramEl = document.getElementById('build-ram');
+            const ssdEl = document.getElementById('build-ssd');
+
+            const cpuName = cpuEl.options[cpuEl.selectedIndex].dataset.name;
+            const gpuName = gpuEl.options[gpuEl.selectedIndex].dataset.name;
+
+            const totalUsd = parseInt(cpuEl.value) + parseInt(gpuEl.value) + parseInt(ramEl.value) + parseInt(ssdEl.value) + 250;
+
+            const customItem = {
+                id: 'custom-' + Date.now(),
+                name: `Кастомный ПК UPG Custom`,
+                specs: `${cpuName} | ${gpuName}`,
+                price: totalUsd,
+                qty: 1,
+                image: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=600&q=80"
+            };
+
+            cart.push(customItem);
+            updateCartUI();
+            showToast("Кастомная сборка добавлена в корзину!");
+            toggleCart();
+        }
+
+        // Update Cart Interface
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const badge = document.getElementById('cart-badge');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            
+            if (totalItems > 0) {
+                badge.innerText = totalItems;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <i class="fa-solid fa-cart-flatbed text-4xl mb-3 text-upg-border"></i>
+                        <p class="text-sm">Корзина пуста</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = '';
+                cart.forEach(item => {
+                    const el = document.createElement('div');
+                    el.className = "flex items-center gap-3 bg-upg-bg p-3 rounded-xl border border-upg-border";
+                    el.innerHTML = `
+                        <img src="${item.image}" class="w-14 h-14 object-cover rounded-lg" onerror="this.src='https://placehold.co/100x100/151c2c/ffffff?text=PC'">
+                        <div class="flex-grow">
+                            <h4 class="text-xs font-bold text-white line-clamp-1">${item.name}</h4>
+                            <div class="text-[11px] font-bold text-upg-cyan mt-0.5">$${item.price}</div>
+                            <div class="flex items-center gap-2 mt-2">
+                                <button onclick="changeQty('${item.id}', -1)" class="w-5 h-5 bg-upg-card rounded text-gray-300 hover:text-white flex items-center justify-center text-xs border border-upg-border">-</button>
+                                <span class="text-xs text-white">${item.qty}</span>
+                                <button onclick="changeQty('${item.id}', 1)" class="w-5 h-5 bg-upg-card rounded text-gray-300 hover:text-white flex items-center justify-center text-xs border border-upg-border">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" class="text-gray-500 hover:text-red-400 p-1">
+                            <i class="fa-solid fa-trash-can text-sm"></i>
+                        </button>
+                    `;
+                    container.appendChild(el);
+                });
+            }
+
+            // Calculations
+            const totalUSD = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            document.getElementById('cart-total-usd').innerText = `$${totalUSD}`;
+            document.getElementById('cart-total-uzs').innerText = formatUZS(totalUSD);
+        }
+
+        // Change Quantity
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id == id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    removeFromCart(id);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        // Remove from Cart
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id != id);
+            updateCartUI();
+        }
+
+        // Toggle Cart Drawer
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        // Toggle Mobile Navigation
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Toggle GitHub 404 Modal
+        function toggleGhModal() {
+            const modal = document.getElementById('gh-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Configurator Calculation
+        function calculateBuildTotal() {
+            const cpuEl = document.getElementById('build-cpu');
+            const gpuEl = document.getElementById('build-gpu');
+            const ramEl = document.getElementById('build-ram');
+            const ssdEl = document.getElementById('build-ssd');
+
+            const cpuPrice = parseInt(cpuEl.value);
+            const gpuPrice = parseInt(gpuEl.value);
+            const ramPrice = parseInt(ramEl.value);
+            const ssdPrice = parseInt(ssdEl.value);
+            const caseAndPowerPrice = 250;
+
+            const totalUSD = cpuPrice + gpuPrice + ramPrice + ssdPrice + caseAndPowerPrice;
+
+            document.getElementById('build-total-usd').innerText = `$${totalUSD}`;
+            document.getElementById('build-total-uzs').innerText = formatUZS(totalUSD);
+
+            // Update Summary Text
+            document.getElementById('summary-cpu').innerText = cpuEl.options[cpuEl.selectedIndex].dataset.name;
+            document.getElementById('summary-gpu').innerText = gpuEl.options[gpuEl.selectedIndex].dataset.name;
+            document.getElementById('summary-ram').innerText = ramEl.options[ramEl.selectedIndex].dataset.name;
+            document.getElementById('summary-ssd').innerText = ssdEl.options[ssdEl.selectedIndex].dataset.name;
+        }
+
+        // Show Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = message;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Checkout Simulation
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Ваша корзина пуста!");
+                return;
+            }
+            alert("Спасибо за заказ! Наш менеджер свяжется с вами для подтверждения доставки.");
+            cart = [];
+            updateCartUI();
+            toggleCart();
+        }
+
+        // Contact Form Submit Handler
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            alert("Спасибо за обращение! Менеджер UPG ответит вам в ближайшее время.");
+            e.target.reset();
+        }
+
+        // Initial Initialization
+        window.onload = function() {
+            renderProducts();
+            calculateBuildTotal();
+        };
+    </script>
+</body>
+</html>
